@@ -1,0 +1,17 @@
+{
+  "name": "dmlek-site",
+  "version": "1.0.0",
+  "description": "Static website for the Democratic Movement for the Liberation of the Eritrean Kunama (DMLEK) built with a custom generator.",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": [
+    "DMLEK",
+    "Kunama",
+    "static site",
+    "Netlify CMS"
+  ],
+  "author": "OpenAI Assistant",
+  "license": "MIT"
+}

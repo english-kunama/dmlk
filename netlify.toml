@@ -1,0 +1,10 @@
+[build]
+  command = "node build.js"
+  publish = "public"
+
+[context.production.environment]
+  NODE_VERSION = "18"
+
+[dev]
+  # Local development settings for Netlify CLI
+  command = "node build.js --watch"
