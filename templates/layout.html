@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }} | DMLEK</title>
+    <!-- Base styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <!-- Basic meta tags -->
+    <meta name="description" content="Democratic Movement for the Liberation of the Eritrean Kunama (DMLEK) – advocating for the rights and dignity of the Kunama people." />
+    <meta property="og:title" content="DMLEK – Democratic Movement for the Liberation of the Eritrean Kunama" />
+    <meta property="og:description" content="Stay informed about the Kunama people’s struggle for autonomy and equality. Latest news, announcements and information from DMLEK." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/kunama-flag.png" />
+    <meta name="theme-color" content="#DC143C" />
+  </head>
+  <body>
+    <header>
+      <!-- Top bar with language selector and social links -->
+      <div class="top-bar">
+        <div class="language-selector">
+          <label for="lang-select" class="sr-only">Language:</label>
+          <select id="lang-select" class="language-dropdown">
+            <option value="en" selected>English</option>
+            <option value="ar">العربية</option>
+            <option value="ti">ትግርኛ</option>
+          </select>
+        </div>
+        <div class="social-links">
+          <!-- Placeholder social links; replace href with actual DMLEK profiles when available -->
+          <a href="https://twitter.com" aria-label="Twitter" class="social-link">&#x1F426;</a>
+          <a href="https://facebook.com" aria-label="Facebook" class="social-link">&#x1F5E3;</a>
+          <a href="https://youtube.com" aria-label="YouTube" class="social-link">&#x1F3AC;</a>
+        </div>
+      </div>
+      <!-- Main header -->
+      <div class="header-content">
+        <div class="logo">
+          <span class="logo-icon">🌾</span>
+          <span class="logo-text" data-translate-key="siteName">DMLEK</span>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="/index.html" data-translate-key="navHome">Home</a></li>
+            <li><a href="/news.html" data-translate-key="navNews">News</a></li>
+            <li><a href="/announcements.html" data-translate-key="navAnnouncements">Announcements</a></li>
+            <li><a href="/about.html" data-translate-key="navAbout">About</a></li>
+            <li><a href="/gallery.html" data-translate-key="navGallery">Gallery</a></li>
+            <li><a href="/contact.html" data-translate-key="navContact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      {{ content }}
+      <!-- Newsletter bar -->
+      <section class="newsletter-bar">
+        <h3 data-translate-key="newsletterTitle">Stay in touch</h3>
+        <p data-translate-key="newsletterDesc">Subscribe to our newsletter for updates on DMLEK activities and Kunama news.</p>
+        <form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
+          <input type="email" name="email" placeholder="Your email" aria-label="Email address" required />
+          <button type="submit" data-translate-key="subscribeBtn">Subscribe</button>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2025 Democratic Movement for the Liberation of the Eritrean Kunama (DMLEK). All rights reserved.</p>
+    </footer>
+    <!-- Translation and search scripts -->
+    <script>
+      // Simple client-side translation; add more keys as needed
+      const translations = {
+        ar: {
+          siteName: 'حركة التحرير الديمقراطية لكيناما الإريترية',
+          navHome: 'الرئيسية',
+          navNews: 'الأخبار',
+          navAnnouncements: 'الإعلانات',
+          navAbout: 'من نحن',
+          navGallery: 'معرض الصور',
+          navContact: 'تواصل',
+          newsletterTitle: 'ابق على اتصال',
+          newsletterDesc: 'اشترك في النشرة الإخبارية للحصول على آخر أخبار كيناما.',
+          subscribeBtn: 'اشترك'
+        },
+        ti: {
+          siteName: 'ዲሞክራሲያዊ እና ነጻነት ምንቅስቓስ ናይ ኤርትራዊት ኩናማ',
+          navHome: 'መእተዊ',
+          navNews: 'ዜና',
+          navAnnouncements: 'መግለጺታት',
+          navAbout: 'ብዛዕባ',
+          navGallery: 'ጋለሪ',
+          navContact: 'ያግእና',
+          newsletterTitle: 'ትሑት ኣንባሳት ተኾነ',
+          newsletterDesc: 'ኣብ ኩናማ ዝኾነ ዜና ሓድሽ ብዙሕ ስጋብ ክትበጽሑ ትድር.',
+          subscribeBtn: 'ኣተው'
+        }
+      };
+      function applyTranslations(lang) {
+        const dict = translations[lang];
+        document.querySelectorAll('[data-translate-key]').forEach((el) => {
+          const key = el.getAttribute('data-translate-key');
+          if (dict && dict[key]) {
+            el.textContent = dict[key];
+          }
+        });
+      }
+      document.getElementById('lang-select').addEventListener('change', function (e) {
+        const lang = e.target.value;
+        localStorage.setItem('dmlek-lang', lang);
+        applyTranslations(lang);
+      });
+      // Apply saved language preference on load
+      document.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('dmlek-lang');
+        if (saved && translations[saved]) {
+          document.getElementById('lang-select').value = saved;
+          applyTranslations(saved);
+        }
+      });
+      // Search filter for pages with search input
+      document.addEventListener('DOMContentLoaded', () => {
+        const search = document.getElementById('search');
+        if (search) {
+          search.addEventListener('input', () => {
+            const query = search.value.toLowerCase();
+            document.querySelectorAll('.card').forEach((card) => {
+              const text = card.innerText.toLowerCase();
+              card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+          });
+        }
+      });
+    </script>
+    <!-- Register service worker for PWA -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('sw.js').catch(function (err) {
+            console.error('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
